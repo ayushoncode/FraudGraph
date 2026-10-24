@@ -47,7 +47,7 @@ def main(argv=None) -> int:
 
     # 2. Run detection pipeline
     config = DetectorConfig()
-    signals, runtimes = run_all_detectors(multigraph, collapsed, config)
+    signals, runtimes, diagnostics = run_all_detectors(multigraph, collapsed, accounts_df, config)
 
     # 3. Export to JSON
     signals_dict = [sig.to_dict() for sig in signals]
@@ -55,7 +55,7 @@ def main(argv=None) -> int:
         json.dump(signals_dict, f, indent=2)
 
     # 4. Print summary
-    print_detector_summary(signals, runtimes, out_file)
+    print_detector_summary(signals, runtimes, diagnostics, out_file)
     print(f"Successfully saved {len(signals)} signals to {out_file.resolve()}\n")
 
     return 0

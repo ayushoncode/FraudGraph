@@ -142,3 +142,37 @@ class DetectorConfig:
     structuring_lower_bound_ratio: float = 0.70
     """Lower bound factor of reporting threshold (e.g. 0.70 * 50,000 = $35,000).
     Transfers between $35k and $50k are considered 'just below' the threshold."""
+
+    # -------------------------------------------------------------------------
+    # Community & Dense Subgraph Detection (Louvain)
+    # -------------------------------------------------------------------------
+    louvain_resolution: float = 1.0
+    """Resolution parameter for Louvain modularity optimization (1.0 = standard modularity)."""
+
+    louvain_seed: int = 42
+    """Fixed random seed for deterministic Louvain community partitions."""
+
+    community_min_size: int = 3
+    """Minimum number of accounts to evaluate as an insular community."""
+
+    community_max_size: int = 30
+    """Maximum number of accounts for a community alert. Communities larger than 30 are
+    considered too large/diffuse for single-case investigation and are marked as oversized."""
+
+    insularity_min: float = 0.70
+    """Minimum insularity ratio: internal_amount / (internal_amount + external_amount).
+    Rings with >= 70% of their money recirculating internally are flagged as insular."""
+
+    new_account_days: int = 30
+    """Window in days to classify an account as 'new' relative to group activity."""
+
+    # -------------------------------------------------------------------------
+    # Shared Device & Hardware Cluster Detection
+    # -------------------------------------------------------------------------
+    shared_device_min_accounts: int = 3
+    """Minimum accounts sharing the same device_id or ip_address to evaluate as a cluster."""
+
+    device_min_internal_txns: int = 3
+    """Minimum internal transactions between co-located accounts required to alert.
+    Prevents flagging families sharing a tablet who rarely or never transfer money to each other."""
+
